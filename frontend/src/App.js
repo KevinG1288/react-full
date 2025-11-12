@@ -76,7 +76,7 @@ function Login({ onLogin }) {
       <div className="login-card">
         <div className="login-header">
           <div className="logo">TC</div>
-          <h1>TechCorp</h1>
+          <h1>Telecumunicaciones</h1>
           <p>Sistema de Gestión de Usuarios</p>
         </div>
 
@@ -128,7 +128,7 @@ function Navbar({ user, onLogout }) {
       <div className="navbar-content">
         <div className="navbar-brand">
           <div className="logo-small">TC</div>
-          <span>TechCorp</span>
+          <span>Telecumunicaciones</span>
         </div>
         <div className="navbar-user">
           <span>Bienvenido, {user?.nombre}</span>
@@ -150,7 +150,8 @@ function Dashboard() {
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
-    telefono: ''
+    telefono: '',
+    password: ''
   });
 
   useEffect(() => {
@@ -188,7 +189,8 @@ function Dashboard() {
     setFormData({
       nombre: user.nombre,
       email: user.email,
-      telefono: user.telefono
+      telefono: user.telefono,
+      password: '' // Dejar vacío por seguridad
     });
     setShowForm(true);
   };
@@ -205,7 +207,7 @@ function Dashboard() {
   };
 
   const resetForm = () => {
-    setFormData({ nombre: '', email: '', telefono: '' });
+    setFormData({ nombre: '', email: '', telefono: '', password: '' });
     setEditingUser(null);
     setShowForm(false);
   };
@@ -250,6 +252,13 @@ function Dashboard() {
                 placeholder="Teléfono"
                 value={formData.telefono}
                 onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
+              />
+              <input
+                type="password"
+                placeholder={editingUser ? "Contraseña (dejar vacío para no cambiar)" : "Contraseña"}
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                required={!editingUser}
               />
               <div className="form-actions">
                 <button type="submit" className="btn btn-success">

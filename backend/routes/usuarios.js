@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 const db = require('../config/database');
@@ -46,15 +45,18 @@ router.post('/', (req, res) => {
   const { nombre, email, telefono, password } = req.body;
   
   // Validaciones básicas
-  if (!nombre || !email || !password) {
+  if (!nombre || !email) {
     return res.status(400).json({ 
-      error: 'Nombre, email y contraseña son obligatorios' 
+      error: 'Nombre y email son obligatorios' 
     });
   }
   
+  // Si no viene password, usar uno por defecto
+  const defaultPassword = password || 'password123';
+  
   const query = 'INSERT INTO usuarios (nombre, email, telefono, password) VALUES (?, ?, ?, ?)';
   
-  db.query(query, [nombre, email, telefono, password], (err, result) => {
+  db.query(query, [nombre, email, telefono, defaultPassword], (err, result) => {
     if (err) {
       console.error('Error al crear usuario:', err);
       
